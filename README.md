@@ -3,8 +3,8 @@
 но в отличии от неё, в моей игре есть
 разнообразные бонусы, интересные скины,
 различные ировые фигуры и капелька вдохновения.
-- [Скачать для android]()
-- [Скачать для ПК]()
+- [Скачать для android](https://github.com/vankad24/Bulbels/raw/master/Bulbels.apk)
+- [Скачать для ПК](https://github.com/vankad24/Bulbels/raw/master/Bulbels.apk)
 - Надеюсь, вам понравится!
 - Приятного времяпровождения!
 ![](preview.png)
