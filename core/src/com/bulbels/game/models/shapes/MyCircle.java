@@ -1,55 +1,70 @@
 package com.bulbels.game.models.shapes;
 
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.utils.Align;
 import com.bulbels.game.models.balls.AllBalls;
 import com.bulbels.game.models.balls.Ball;
 import com.bulbels.game.screens.GameField;
+import com.bulbels.game.utils.ShapeData;
+
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.after;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.delay;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.removeActor;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.run;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
+import static com.bulbels.game.models.shapes.AllShapes.width;
 
 public class MyCircle extends Shape {
     Circle circle;
-    float radius;
-    GlyphLayout glyphLayout;
-    public MyCircle(float x, float y, int health) {
-        font = AllShapes.font;
-        this.health = health;
-        this.radius=AllShapes.width/2f;
-        circle =new Circle(x+radius,y+radius,radius);
-        sprite = new Sprite(AllShapes.textureAtlas.findRegion("ball"));
 
-        sprite.setSize(AllShapes.width,AllShapes.width);
-        RGB = convertToColor(health);
-        sprite.setColor(RGB[0]/255f,RGB[1]/255f,RGB[2]/255f,1);
+    MyCircle(String textureName, GameField field) {
+        super(textureName,field);
+    }
+    public MyCircle(GameField field) {
+        super("ball",field);
+    }
+    @Override
+    public void createShape() {circle= new Circle();}
 
-        steps = 50;
-        stepGrowth = radius*.3f/steps;
+    @Override
+    protected void positionChanged() {
+        circle.setPosition(getX()+circle.radius,getY()+circle.radius);
     }
 
     @Override
-    public void drawShape(SpriteBatch batch) {
-        sprite.setX(circle.x-radius);
-        sprite.setY(circle.y-radius);
+    protected void sizeChanged() {
+        circle.setRadius(getWidth()/2);
+        sprite.setSize(getWidth(),getHeight());
+        setOrigin(Align.center);
+    }
+
+    @Override
+    public void draw(Batch batch, float parentAlpha) {
+        sprite.setScale(getScaleX(),getScaleY());
+        sprite.setPosition(getX(),getY());
+        sprite.setColor(getColor());
         sprite.draw(batch);
 
-        if (destroying){
-            if (alpha-255f/steps* GameField.coefficientFps<=0)destroy();
-            else {
-                sprite.setAlpha((alpha -= 255f/steps*GameField.coefficientFps)/255f);
-                sprite.setSize((radius+=stepGrowth)*2,radius*2);
-            }
-        }else{
-            glyphLayout = new GlyphLayout(font,String.valueOf(health));
+        if (!destroying){
+            glyphLayout.setText(font,health+"");
             font.draw(batch,glyphLayout,circle.x-glyphLayout.width/2, circle.y+glyphLayout.height/2);
         }
+
+
     }
+
+
 
     @Override
     protected void reflection() {
-        if (circle.x>ball.getX() || circle.x+radius<ball.getX() )ball.reflectionWall();
-        else if (circle.y>ball.getY() || circle.y+radius<ball.getY())ball.reflectionCeiling();
+        if (circle.x>ball.getX() || circle.x+circle.radius<ball.getRight() )ball.reflectionWall();
+        else if (circle.y>ball.getY() || circle.y+circle.radius<ball.getTop())ball.reflectionCeiling();
     }
 
     @Override
@@ -57,24 +72,30 @@ public class MyCircle extends Shape {
         this.ball = ball;
         if (Intersector.overlaps(ball.ballCircle, circle)) {
             if (!ball.ghost)reflection();
-            RGB = convertToColor(health-= AllBalls.damage);
-            sprite.setColor(RGB[0] / 255f, RGB[1] / 255f, RGB[2] / 255f, 1);
-            if (health <= 0) destroying = true;
+            updateColor(health -= AllBalls.damage);
+            if (health <= 0){
+                destroying = true;
+                destroy();
+            }
         }
     }
-    @Override
-    public void setX(float x) { circle.x=x+radius;}
 
     @Override
-    public void setY(float y) { circle.y=y+radius;}
+    public void destroy() {
+        Runnable end = new Runnable() {
+            @Override
+            public void run() {
+                field.game.audioManager.puck();
+            }
+        };
+
+//        addAction(after(sequence(delay(.4f),run(end))));
+        super.destroy();
+        field.game.audioManager.puck();
+
+    }
 
     @Override
-    public void addX(float addX) {circle.x+=addX;}
+    public ShapeData getData() { return new ShapeData(2,health,maxHealth,getX(),getY()); }
 
-    @Override
-    public void addY(float addY) {circle.y+=addY;}
-
-
-
-    public void setRadius(float radius) {this.radius = radius;}
 }

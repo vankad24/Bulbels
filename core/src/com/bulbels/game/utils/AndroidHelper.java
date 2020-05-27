@@ -1,10 +1,11 @@
 package com.bulbels.game.utils;
 
-public interface AndroidHelper {
+import java.util.TreeMap;
 
+public interface AndroidHelper {
+    public TreeMap<String, String> STRINGS = new TreeMap<>();
     void printMessage(String title, String text);
     void makeToast(String text);
-    void finish();
 
-    String getSt(int Id);
+    String getString(String name);
 }

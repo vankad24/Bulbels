@@ -7,6 +7,8 @@
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowFullscreen">true</item>
+        <item name="android:navigationBarColor">@color/navigationBar</item>
+        <item name="android:colorPrimaryDark">@color/navigationBar</item>
     </style>
 
 </resources>

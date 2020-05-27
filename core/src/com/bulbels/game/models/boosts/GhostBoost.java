@@ -1,25 +1,25 @@
 package com.bulbels.game.models.boosts;
 
-import com.bulbels.game.models.balls.Ball;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.bulbels.game.screens.GameField;
+
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 
 public class GhostBoost extends Boost {
 
     @Override
-    public void activate() {
-        for (int i = 0; i <gameField.allBalls.getArrayBalls().size ; i++) {
-            gameField.allBalls.getArrayBalls().get(i).ghost=true;
-            gameField.allBalls.getArrayBalls().get(i).spriteBall.setAlpha(.5f);
-        }
-        time = 1500;
-        timer.start();
+    public void activate(int level) {
+        GameField.ghost = true;
+        GameField.action = sequence(alpha(.5f),delay(.8f+0.4f*level),alpha(1));
     }
 
     @Override
     public void end() {
-        for (int i = 0; i <gameField.allBalls.getArrayBalls().size ; i++) {
-            gameField.allBalls.getArrayBalls().get(i).ghost=false;
-            gameField.allBalls.getArrayBalls().get(i).spriteBall.setAlpha(1);
-        }
-        gameField.boost = null;
+        GameField.ghost = false;
+    }
+
+    @Override
+    public String getRegionName() {
+        return "ghost_boost";
     }
 }

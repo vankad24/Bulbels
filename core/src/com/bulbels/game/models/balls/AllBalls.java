@@ -1,25 +1,30 @@
 package com.bulbels.game.models.balls;
 
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Array;
-import com.bulbels.game.screens.GameField;
+import com.bulbels.game.Bulbels;
 
 import java.util.Random;
 
 
-public class AllBalls {
-    public static float radius,startX, startY, maxVelocity, stepGrowth, size;
+public class AllBalls extends Group {
+    public static float radius,startX, startY, maxVelocity, stepGrowth;
     public static int damage=1;
     static Array<Ball> balls;
     public AllBalls() {
-        balls = new Array<>();
+        initialize();
+        radius = 15* Bulbels.coefficientWidth;
+        maxVelocity =30*Bulbels.coefficientWidth;
 
-        radius = 15* GameField.coefficientWidth;
-        maxVelocity =30*GameField.coefficientWidth;
-        size =  radius;
     }
 
+    public void initialize(){
+        balls = new Array<>();
+        clearChildren();
+    }
 
     public Array<Ball> getArrayBalls() {
         return balls;
@@ -33,9 +38,15 @@ public class AllBalls {
         }
     }
 
-    public void createBall(float x,float y){ balls.add(new Ball(x,y));}
-    public void addBall(){ balls.add(new Ball(startX,startY));}
-    public void setX(float x) {
+    public void addBall(float x,float y) {
+        Ball ball = new Ball(x, y);
+        balls.add(ball);
+        addActor(ball);
+    }
+    public void addBall(){ addBall(startX,startY);}
+    public void addBall(int amount){for (int i = 0; i <amount ; i++)addBall(startX,startY);}
+
+   /* public void setX(float x) {
         for (Ball b : balls) {
             b.setX(x);
         }
@@ -45,7 +56,7 @@ public class AllBalls {
         for (Ball b: balls){
             b.setY(y);
         }
-    }
+    }*/
 
     public boolean inMotion(){
         for (Ball b: balls){
@@ -72,13 +83,17 @@ public class AllBalls {
     }
     public boolean allIn(float x,float y){
         for (Ball b: balls){
-            if (x!=b.getX()||y!=b.getY()){
+            if (x!=b.getCenterX()||y!=b.getCenterY()){
                 //System.out.println("x,y"+x+" "+y+" b "+b.getX()+" "+b.getY());
                 return false;
             }
         }
+        System.out.println("allIn");
         return true;
     }
+
+    public void setSprites(Sprite sprite){for (Ball b: balls)b.setSprite(sprite); }
+
     public void drawBalls(SpriteBatch batch){
 
         float lastX = -1, lastY = -1;
@@ -86,13 +101,21 @@ public class AllBalls {
             if (lastX != ball.getBottomX() || lastY != ball.getBottomY()) {
                 lastX = ball.getBottomX();
                 lastY = ball.getBottomY();
-                ball.spriteBall.setY(ball.getBottomY());
-                ball.spriteBall.setX(ball.getBottomX());
-                ball.spriteBall.draw(batch);
+                ball.sprite.setY(ball.getBottomY());
+                ball.sprite.setX(ball.getBottomX());
+                ball.sprite.draw(batch);
             }
         }
-
     }
+
+    public void print(){
+        for (Ball ball : balls) System.out.println(ball.getX()+" "+ball.sprite.getX()+" "+ball.ballCircle.x+" "+ball.ballCircle.radius);
+    }
+
+    public void update(){
+        for (Ball ball : balls)
+            ball.positionChanged();
+        }
     public void dispose(){
         for (Ball ball : balls) {
             ball.dispose();
@@ -101,30 +124,22 @@ public class AllBalls {
 
     static void delete(Ball ball){
         balls.removeValue(ball,true);
+        ball.remove();
     }
 
-    public static void addSpecialBalls(int quantity, float x, float y){
+    public void addSpecialBalls(int quantity, float x, float y){
         Random rand = new Random();
         for (int i = 0; i <quantity ; i++) {
-            balls.add(new SpecialBall(x,y,rand.nextInt(100)-50,rand.nextInt(100)-50));
+            SpecialBall newBall = new SpecialBall(x,y,x+rand.nextInt(100)-50,y+rand.nextInt(100)-50);
+//            System.out.println(newBall.velocityX+" "+newBall.velocityY);
+            balls.add(newBall);
+            addActor(newBall);
         }
     }
 
-    public void setMaxVelocity(float vel){
-        for (Ball ball : balls) {
-            ball.maxVelocity=vel;
-        }
-    }
-    public void resize(float newSize){
-        stepGrowth = (newSize-size)/6f;
-        size = newSize;
-        for (Ball ball : balls) ball.resizing = true;
+    public static void resize(float newSize){
+        for (Ball ball : balls)ball.setSize(newSize,newSize);
     }
 
-    public void setNormalSize(){
-        for (Ball ball : balls){
-            ball.ballCircle.radius=AllBalls.radius;
-            ball.spriteBall.setSize(AllBalls.radius,size);
-        }
-    }
+
 }

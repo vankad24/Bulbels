@@ -1,0 +1,30 @@
+{
+  "com.badlogic.gdx.graphics.g2d.BitmapFont":{
+    "default-font":{
+      "file":"myFont.fnt"
+    }
+  },
+  "com.badlogic.gdx.graphics.Color":{
+  "black":{
+    "a":1,
+    "b":0,
+    "g":0,
+    "r":0
+  },
+    "white":{
+      "a":1,
+      "b":1,
+      "g":1,
+      "r":1
+    },
+    "yellow":{
+      "a":1,
+      "b":0,
+      "g":1,
+      "r":1
+    }
+},
+  "com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle": {
+    "default": { "titleFont": "default-font", "background": "color_pane", "titleFontColor": "yellow", "stageBackground": "common_item" }
+  }
+}

@@ -4,16 +4,22 @@ import com.bulbels.game.models.balls.AllBalls;
 import com.bulbels.game.models.balls.Ball;
 
 public class SpeedBoost extends Boost{
+    float oldVelocity;
 
     @Override
-    public void activate() {
-        gameField.allBalls.setMaxVelocity(AllBalls.maxVelocity*2);
+    public void activate(int level) {
+        oldVelocity = AllBalls.maxVelocity;
+        float val = 1.25f+.25f*level;
+        AllBalls.maxVelocity*=val;
     }
 
     @Override
     public void end() {
-        gameField.allBalls.setMaxVelocity(AllBalls.maxVelocity);
-        gameField.boost = null;
+        AllBalls.maxVelocity=oldVelocity;
+    }
 
+    @Override
+    public String getRegionName() {
+        return "speed_boost";
     }
 }

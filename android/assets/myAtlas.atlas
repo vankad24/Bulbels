@@ -1,0 +1,328 @@
+
+myAtlas.png
+size: 2048,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+aim_boost
+  rotate: false
+  xy: 814, 144
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: -1
+arrow1
+  rotate: false
+  xy: 888, 628
+  size: 422, 81
+  orig: 422, 81
+  offset: 0, 0
+  index: -1
+arrow2
+  rotate: false
+  xy: 888, 580
+  size: 437, 46
+  orig: 437, 46
+  offset: 0, 0
+  index: -1
+arrows
+  rotate: false
+  xy: 1821, 291
+  size: 135, 99
+  orig: 135, 99
+  offset: 0, 0
+  index: -1
+background
+  rotate: false
+  xy: 1420, 148
+  size: 196, 196
+  orig: 196, 196
+  offset: 0, 0
+  index: -1
+ball
+  rotate: false
+  xy: 1618, 37
+  size: 127, 127
+  orig: 127, 127
+  offset: 0, 0
+  index: -1
+baseball
+  rotate: false
+  xy: 1342, 12
+  size: 130, 130
+  orig: 130, 130
+  offset: 0, 0
+  index: -1
+basket_ball
+  rotate: false
+  xy: 1078, 10
+  size: 130, 132
+  orig: 130, 132
+  offset: 0, 0
+  index: -1
+bawling_ball
+  rotate: false
+  xy: 946, 11
+  size: 130, 131
+  orig: 130, 131
+  offset: 0, 0
+  index: -1
+billiard_ball
+  rotate: false
+  xy: 1494, 347
+  size: 130, 130
+  orig: 130, 130
+  offset: 0, 0
+  index: -1
+boosts
+  rotate: false
+  xy: 330, 2
+  size: 280, 349
+  orig: 280, 349
+  offset: 0, 0
+  index: -1
+box
+  rotate: false
+  xy: 1626, 329
+  size: 193, 193
+  orig: 193, 193
+  offset: 0, 0
+  index: -1
+button_down
+  rotate: false
+  xy: 2, 755
+  size: 720, 127
+  orig: 720, 127
+  offset: 0, 0
+  index: -1
+button_up
+  rotate: false
+  xy: 2, 884
+  size: 720, 127
+  orig: 720, 127
+  offset: 0, 0
+  index: -1
+cancel
+  rotate: false
+  xy: 1090, 346
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: -1
+checkmark
+  rotate: false
+  xy: 1932, 811
+  size: 100, 92
+  orig: 100, 92
+  offset: 0, 0
+  index: -1
+coin
+  rotate: false
+  xy: 1618, 166
+  size: 172, 161
+  orig: 172, 161
+  offset: 0, 0
+  index: -1
+color_pane
+  rotate: false
+  xy: 1026, 711
+  size: 300, 300
+  orig: 300, 300
+  offset: 0, 0
+  index: -1
+colorful_ball
+  rotate: false
+  xy: 1494, 479
+  size: 130, 130
+  orig: 130, 130
+  offset: 0, 0
+  index: -1
+common_item
+  rotate: false
+  xy: 304, 353
+  size: 300, 400
+  orig: 300, 400
+  offset: 0, 0
+  index: -1
+damage_boost
+  rotate: false
+  xy: 888, 346
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: -1
+earth
+  rotate: false
+  xy: 1474, 16
+  size: 130, 130
+  orig: 130, 130
+  offset: 0, 0
+  index: -1
+ender_perl
+  rotate: false
+  xy: 1210, 12
+  size: 130, 130
+  orig: 130, 130
+  offset: 0, 0
+  index: -1
+exit
+  rotate: false
+  xy: 606, 415
+  size: 280, 300
+  orig: 280, 300
+  offset: 0, 0
+  index: -1
+foot_ball
+  rotate: false
+  xy: 1792, 160
+  size: 130, 129
+  orig: 130, 129
+  offset: 0, 0
+  index: -1
+ghost_boost
+  rotate: false
+  xy: 1630, 524
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: -1
+gold_item
+  rotate: false
+  xy: 2, 353
+  size: 300, 400
+  orig: 300, 400
+  offset: 0, 0
+  index: -1
+hand
+  rotate: false
+  xy: 1832, 524
+  size: 130, 200
+  orig: 130, 200
+  offset: 0, 0
+  index: -1
+knob
+  rotate: false
+  xy: 2, 5
+  size: 200, 10
+  orig: 200, 10
+  offset: 0, 0
+  index: -1
+line
+  rotate: false
+  xy: 1606, 136
+  size: 10, 10
+  orig: 10, 10
+  offset: 0, 0
+  index: -1
+mute
+  rotate: false
+  xy: 1932, 729
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+r_button_down
+  rotate: false
+  xy: 612, 213
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: -1
+r_button_up
+  rotate: false
+  xy: 1292, 346
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: -1
+rainbow_football
+  rotate: false
+  xy: 1821, 392
+  size: 130, 130
+  orig: 130, 130
+  offset: 0, 0
+  index: -1
+rainbow_item
+  rotate: false
+  xy: 1328, 611
+  size: 300, 400
+  orig: 300, 400
+  offset: 0, 0
+  index: -1
+record
+  rotate: false
+  xy: 1932, 905
+  size: 100, 106
+  orig: 100, 106
+  offset: 0, 0
+  index: -1
+settings
+  rotate: false
+  xy: 2, 17
+  size: 326, 334
+  orig: 326, 334
+  offset: 0, 0
+  index: -1
+shop
+  rotate: false
+  xy: 1630, 726
+  size: 300, 285
+  orig: 300, 285
+  offset: 0, 0
+  index: -1
+size_boost
+  rotate: false
+  xy: 612, 11
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: -1
+skins
+  rotate: false
+  xy: 724, 717
+  size: 300, 294
+  orig: 300, 294
+  offset: 0, 0
+  index: -1
+slider_background
+  rotate: false
+  xy: 888, 548
+  size: 450, 30
+  orig: 450, 30
+  offset: 0, 0
+  index: -1
+slider_knob
+  rotate: false
+  xy: 1964, 657
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+small_boost
+  rotate: false
+  xy: 1218, 144
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: -1
+speed_boost
+  rotate: false
+  xy: 1016, 144
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: -1
+square
+  rotate: false
+  xy: 814, 349
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+tennis_ball
+  rotate: false
+  xy: 814, 11
+  size: 130, 131
+  orig: 130, 131
+  offset: 0, 0
+  index: -1

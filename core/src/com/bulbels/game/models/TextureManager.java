@@ -10,6 +10,7 @@ public class TextureManager {
     public TextureManager() {
         manager = new AssetManager();
         manager.load("myAtlas.atlas",TextureAtlas.class);
+        manager.load("nameAtlas.atlas",TextureAtlas.class);
         manager.finishLoading();
     }
 

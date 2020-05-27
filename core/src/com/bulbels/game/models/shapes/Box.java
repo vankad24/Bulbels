@@ -1,67 +1,54 @@
 package com.bulbels.game.models.shapes;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.bulbels.game.models.balls.AllBalls;
 import com.bulbels.game.models.balls.Ball;
 import com.bulbels.game.screens.GameField;
+import com.bulbels.game.utils.ShapeData;
 
-public class Box extends Shape {
-    Rectangle rectangle;
-    float width;
-    GlyphLayout glyphLayout;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
+import static com.bulbels.game.Bulbels.coefficientWidth;
+import static com.bulbels.game.models.shapes.AllShapes.*;
 
-    public Box(float x, float y, int health) {
-        font = AllShapes.font;
-        this.health = health;
-        this.width = AllShapes.width;
-        sprite = new Sprite(AllShapes.textureAtlas.findRegion("square"));
-        rectangle = new Rectangle(x,y,width,width);
-        sprite.setSize(width,width);
+public class Box extends Square {
 
-        sprite.setColor(1f,150/255f,0,1);
-        steps = 36;
-        stepGrowth = width*.3f/steps;
+
+
+    Box(GameField field) {
+        super("box", field);
+        //sprite.setColor(1f,150/255f,0,1);
+
     }
-
     @Override
-    public void drawShape(SpriteBatch batch) {
-        sprite.setX(rectangle.x);
-        sprite.setY(rectangle.y);
+    public void draw(Batch batch, float parentAlpha) {
+        sprite.setScale(getScaleX(), getScaleY());
+        sprite.setPosition(getX(), getY());
+        sprite.setAlpha(getColor().a);
         sprite.draw(batch);
-        if (destroying){
-            if (alpha-255f/steps* GameField.coefficientFps<=0)destroy();
-            else {
-                sprite.setAlpha((alpha -= 255f/steps*GameField.coefficientFps)/255f);
-                sprite.setSize(width+=stepGrowth,width);
-                addX(-stepGrowth/2);
-                addY(-stepGrowth/2);
-            }
-        }else{
-            glyphLayout = new GlyphLayout(font,String.valueOf(health));
-            // System.out.println(glyphLayout.width+" "+glyphLayout.height);
-            font.draw(batch,glyphLayout,rectangle.x+(width-glyphLayout.width)/2, rectangle.y+(width+glyphLayout.height)/2);
+        if (!destroying) {
+            glyphLayout.setText(font, health+"");
+            font.draw(batch, glyphLayout, rectangle.x + (width - glyphLayout.width) / 2, rectangle.y + (width + glyphLayout.height) / 2);
         }
     }
 
-    @Override
-    protected void reflection() {
-        if (rectangle.x>ball.getX() || rectangle.x+width<ball.getX() )ball.reflectionWall();
-        else if (rectangle.y>ball.getY() || rectangle.y+width<ball.getY())ball.reflectionCeiling();
-    }
 
     @Override
     public void checkCollision(Ball ball) {
         this.ball = ball;
         if (Intersector.overlaps(ball.ballCircle, rectangle)) {
+
             if (!ball.ghost)reflection();
             health-= AllBalls.damage;
             if (health <= 0) {
                 destroying = true;
+                destroy();
                 drop();
             }
         }
@@ -69,26 +56,49 @@ public class Box extends Shape {
     }
 
     void drop(){
-        int[] chances={60,0,0,0};
-        switch (AllShapes.dropWithChance(chances)) {
+        int[] chances={60,40,10,3};
+        switch (dropWithChance(chances)) {
             case 0:
-                AllBalls.addSpecialBalls(5,rectangle.x+width/2f,rectangle.y+width/2f);
+                field.allBalls.addSpecialBalls(5,rectangle.x+width/2f,rectangle.y+width/2f);
                 break;
             case 1:
-
+                Square square = field.allShapes.squarePool.obtain();
+                square.init(getX(),getY(),GameField.turn*2);
+                square.addAction(sequence(scaleTo(.5f,.5f),parallel(fadeIn(1),scaleTo(1,1,1))));
+                field.allShapes.switchShapes(this,square);
+                break;
+            case 2:
+                field.allShapes.addCoins(5,getX(), getY());
+                break;
+            case 3:
+                int[] chances2={70,30};
+                switch (dropWithChance(chances2)){
+                    case 0:
+                        field.allShapes.addBoost(getX(),getY());
+                        break;
+                    case 1:
+                        field.allShapes.addSkin(getX(),getY());
+                        break;
+                }
                 break;
         }
     }
 
     @Override
-    public void setX(float x) { rectangle.x=x;}
+    public void destroy() {
+
+        end = new Runnable() {
+            @Override
+            public void run() {
+                 field.game.audioManager.crash_box();
+                 delete();
+            }
+        };
+        addAction(after(sequence(run(end),removeActor())));
+
+
+    }
 
     @Override
-    public void setY(float y) { rectangle.y=y;}
-
-    @Override
-    public void addY(float addY) {rectangle.y+=addY;}
-
-    @Override
-    public void addX(float addX) {rectangle.x+=addX;}
+    public ShapeData getData() { return new ShapeData(3,health,maxHealth,getX(),getY()); }
 }
